@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title>张书良微信管理</title>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui@2.0.5/lib/theme-chalk/index.css">
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script src="http://cdn.bootcss.com/vue-resource/1.3.4/vue-resource.js"></script>
+	<script src="https://unpkg.com/element-ui@2.0.5/lib/index.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	
+	<style>      
+      #top {
+	      background: #424541;
+	      padding:5px;
+	      overflow:hidden
+      }
+	</style>
+	
+</head>
+<body>
+    <div id="weixin">
+
+		<div id="top">			
+				<el-button type="text" @click="search" style="color:white">查询</el-button>	
+				<el-button type="text" @click="handleadd" style="color:#ffffff">添加</el-button>
+			    <el-input v-model="input" @click="handleadd" placeholder="请输入内容"></el-input>
+			</span>
+
+		</div>
+				
+		<br/>
+
+        <div style="margin-top:15px">
+		  <el-table
+		    ref="testTable"		  
+		    :data="tableData"
+		    style="width:100%"
+		    border
+		    >
+			<el-table-column
+				prop="name"
+				label="用户姓名"
+				sortable
+				show-overflow-tooltip>
+			</el-table-column>
+		    <el-table-column
+		      prop="idCard"
+		      label="省份证号码"
+		      sortable
+		      show-overflow-tooltip>
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="weixinCode"
+		      label="微信号码"
+		      sortable>
+		    </el-table-column>
+		    
+   		    <el-table-column
+		      prop="qqCode"
+		      label="qq号码"
+		      sortable>
+		    </el-table-column>
+		    
+   		    <el-table-column
+		      prop="phone"
+		      label="手机号码"
+		      sortable>
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="otherInfo"
+		      label="其他信息"
+		      sortable>
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="ctime"
+		      label="创建时间"
+			  :formatter="dateFormat"
+		      sortable>
+		    </el-table-column>
+		    
+	        <el-table-column label="操作" width="300">
+		      <template scope="scope">
+		       <el-button
+		          size="small"
+		          type="danger"
+		          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+		        <el-button
+		          size="small"
+		          type="success"
+		          @click="handleUpdate(scope.$index, scope.row)">修改</el-button>
+		      </template>
+		    </el-table-column>
+		  </el-table>
+		  
+		  <div align="center">
+			  <el-pagination
+			      @size-change="handleSizeChange"
+			      @current-change="handleCurrentChange"
+			      :current-page="currentPage"
+			      :page-sizes="[10, 20, 30, 40]"
+			      :page-size="pagesize"
+			      layout="total, sizes, prev, pager, next, jumper"
+			      :total="totalCount">
+			  </el-pagination>
+		  </div>
+		</div> 
+		
+		<el-dialog title="添加信息" :visible.sync="dialogFormVisible">
+		  <el-form :model="form">
+			  <el-form-item label="用户姓名" label-width="120px" style="width:35%">
+				  <el-input v-model="form.name" auto-complete="off"></el-input>
+			  </el-form-item>
+			  <el-form-item label="省份证" label-width="120px" style="width:35%">
+		      <el-input v-model="form.idCard" auto-complete="off"></el-input>
+		    </el-form-item>	    
+		    <el-form-item label="微信号码" label-width="120px" style="width:35%">
+		      <el-input v-model="form.weixinCode" auto-complete="off"></el-input>
+		    </el-form-item>
+		    <el-form-item label="qq号码" label-width="120px" style="width:35%">
+		      <el-input v-model="form.qqCode" auto-complete="off"></el-input>
+		    </el-form-item>
+			  <el-form-item label="手机号码" label-width="120px" style="width:35%">
+				  <el-input v-model="form.phone" auto-complete="off"></el-input>
+			  </el-form-item>
+
+			  <el-form-item label="其他信息" label-width="120px" style="width:35%">
+				  <el-input v-model="form.otherInfo" auto-complete="off"></el-input>
+			  </el-form-item>
+
+		  </el-form>
+		  <div slot="footer" class="dialog-footer">
+		    <el-button @click="dialogFormVisible = false">取 消</el-button>
+		    <el-button type="primary" @click="add">确 定</el-button>
+		  </div>
+		</el-dialog>
+		
+		<el-dialog title="修改用户信息" :visible.sync="updateFormVisible">
+		  <el-form :model="updateform">
+		    <el-form-item label="用户姓名" label-width="120px" style="width:35%">
+		      <el-input v-model="updateform.name" auto-complete="off"></el-input>
+		    </el-form-item>
+			  <el-form-item label="省份证" label-width="120px" style="width:35%">
+				  <el-input v-model="updateform.idCard" auto-complete="off"></el-input>
+			  </el-form-item>
+			  <el-form-item label="微信号码" label-width="120px" style="width:35%">
+				  <el-input v-model="updateform.weixinCode" auto-complete="off"></el-input>
+			  </el-form-item>
+			  <el-form-item label="qq号码" label-width="120px" style="width:35%">
+				  <el-input v-model="updateform.qqCode" auto-complete="off"></el-input>
+			  </el-form-item>
+			  <el-form-item label="手机号码" label-width="120px" style="width:35%">
+				  <el-input v-model="updateform.phone" auto-complete="off"></el-input>
+			  </el-form-item>
+			  <el-form-item label="其他信息" label-width="120px" style="width:35%">
+				  <el-input v-model="updateform.otherInfo" auto-complete="off"></el-input>
+			  </el-form-item>
+		  </el-form>
+		  <div slot="footer" class="dialog-footer">
+		    <el-button @click="updateFormVisible = false">取 消</el-button>
+		    <el-button type="primary" @click="update">确 定</el-button>
+		  </div>
+		</el-dialog>
+		
+    </div>
+	
+    <footer align="center">
+        <p>&copy; 公众号管理</p>
+    </footer>
+
+	<script>
+	var vue = new Vue({			
+			el:"#weixin",
+		    data: {		  
+		    	//表格当前页数据
+		    	tableData: [],
+		        
+		        //请求的URL
+		        url:'job/query/job',
+		        
+		        //默认每页数据量
+		        pagesize: 10,		        
+		        
+		        //当前页码
+		        currentPage: 1,
+		        
+		        //查询的页码
+		        start: 1,
+		        
+		        //默认数据总数
+		        totalCount: 10,
+		        
+		        //添加对话框默认可见性
+		        dialogFormVisible: false,
+		        
+		        //修改对话框默认可见性
+		        updateFormVisible: false,
+		        
+		        //提交的表单
+		        form: {
+		        	name: '',
+		        	idCard: '',
+		        	weixinCode: '',
+		        	qqCode: '',
+		            phone: '',
+		        	otherInfo: '',
+		          },
+
+				queryform: {
+					userId: '',
+					name: '',
+					idCard: '',
+					weixinCode: '',
+					qqCode: '',
+					phone: '',
+					otherInfo: '',
+				},
+		          
+		        updateform: {
+		            userId: '',
+		        	name: '',
+		        	idCard: '',
+		        	weixinCode: '',
+		        	qqCode: '',
+		        	phone: '',
+		        	otherInfo: '',
+		        },
+		    },
+		    methods: {
+
+		        //从服务器读取数据
+				loadData: function(pageNum, pageSize){					
+					axios.get('wx/user?' + 'pageNum=' +  pageNum + '&pageSize=' + pageSize)
+					.then(res=>{
+                		this.tableData = res.data.data.records;
+                		this.totalCount = res.data.data.total;
+                	}).catch(e=>{
+                    console.log(e)
+                    });
+				},
+				      
+		        //单行删除
+			   handleDelete: function(index, row) {
+					axios.delete('wx/user',{
+						params: {
+							"userId":row.userId}
+							}
+					).then(res=>{
+						this.loadData( this.currentPage, this.pagesize);
+		            }).catch(e=>{
+								console.log(e)
+				  });
+		        },
+
+		        
+		        //搜索
+		        search: function(){
+		        	this.loadData(this.currentPage, this.pagesize);
+		        },
+		        
+		        //弹出对话框
+		        handleadd: function(){		                
+		            this.dialogFormVisible = true;	              
+		        },
+
+		        //添加
+		        add: function(){
+		       axios.post('wx/user',
+					{"name":this.form.name,
+		        	"idCard":this.form.idCard,
+		        	"weixinCode":this.form.weixinCode,
+		        	"qqCode":this.form.qqCode,
+		        	"phone":this.form.phone,
+		        	"otherInfo":this.form.otherInfo
+		        }
+		        ).then(res=>{
+        				this.loadData(this.currentPage, this.pagesize);
+        				this.dialogFormVisible = false;
+                    }).catch(e=>{
+                    console.log(e)
+                    });
+		        },
+
+				//修改回显窗
+				handleUpdate:function (index, row) {
+					this.updateform.userId =row.userId ,
+							this.updateform.name=row.name,
+							this.updateform.idCard=row.idCard,
+							this.updateform.weixinCode=row.weixinCode,
+							this.updateform.qqCode=row.qqCode,
+							this.updateform.phone=row.phone,
+							this.updateform.otherInfo=row.otherInfo,
+					this.updateFormVisible = true;
+				},
+
+				dateFormat:function (row,column) {
+					//将13位时间戳转换成时间格式  输出为2018-10-09
+					let date = new Date(row.ctime);
+					let year = date.getFullYear();
+					let month = date.getMonth() + 1;
+					let day = date.getDate();
+					month = month < 10 ? "0" + month : month;
+					day = day < 10 ? "0" + day : day;
+					var myDate = ''
+					myDate = year + '-' + month + '-' + day;
+					return myDate
+				},
+
+		        //更新任务
+		        update: function(){
+		        	this.$http.put('wx/user',
+					{
+						    "userId":this.updateform.userId,
+						    "name":this.updateform.name,
+						    "name":this.updateform.name,
+							"idCard":this.updateform.idCard,
+							"weixinCode":this.updateform.weixinCode,
+							"qqCode":this.updateform.qqCode,
+							"phone":this.updateform.phone,
+							"otherInfo":this.updateform.otherInfo
+					}
+		        	).then(res=>{
+						this.updateFormVisible = false;
+						this.loadData(this.currentPage, this.pagesize);
+
+					}).catch(e=>{
+						console.log(e)
+					})
+		        },
+		      
+		        //每页显示数据量变更
+		        handleSizeChange: function(val) {
+		            this.pagesize = val;
+		            this.loadData(this.currentPage, this.pagesize);
+		        },
+		        
+		        //页码变更
+		        handleCurrentChange: function(val) {
+		            this.currentPage = val;
+		            this.loadData(this.currentPage, this.pagesizepagesize);
+		        },	      
+		        		        
+		    },	    
+		    
+		    
+		  });
+	
+		  //载入数据
+    	  vue.loadData(vue.currentPage, vue.pagesize);
+	</script>  
+	
+</body>
+</html>
