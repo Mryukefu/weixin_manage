@@ -233,7 +233,7 @@
 
 		        //从服务器读取数据
 				loadData: function(pageNum, pageSize){					
-					axios.get('wx/user?' + 'pageNum=' +  pageNum + '&pageSize=' + pageSize)
+					axios.get('/wx/manage/user?' + 'pageNum=' +  pageNum + '&pageSize=' + pageSize)
 					.then(res=>{
                 		this.tableData = res.data.data.records;
                 		this.totalCount = res.data.data.total;
@@ -244,7 +244,7 @@
 				      
 		        //单行删除
 			   handleDelete: function(index, row) {
-					axios.delete('wx/user',{
+					axios.delete('/wx/manage/user',{
 						params: {
 							"userId":row.userId}
 							}
@@ -268,7 +268,7 @@
 
 		        //添加
 		        add: function(){
-		       axios.post('wx/user',
+		       axios.post('/wx/manage/user',
 					{"name":this.form.name,
 		        	"idCard":this.form.idCard,
 		        	"weixinCode":this.form.weixinCode,
@@ -311,7 +311,7 @@
 
 		        //更新任务
 		        update: function(){
-		        	this.$http.put('wx/user',
+		        	this.$http.put('/wx/manage/user',
 					{
 						    "userId":this.updateform.userId,
 						    "name":this.updateform.name,

@@ -1,11 +1,12 @@
 package com.example.weixin_manage.controller;
 
-import com.example.weixin_manage.result.JsonResult;
 import com.example.weixin_manage.service.UserDetailService;
 import com.example.weixin_manage.support.CheckSignatureUtil;
-import com.example.weixin_manage.vo.WxUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ import java.io.PrintWriter;
  * @since 2021-09-02
  */
 @RestController
-@RequestMapping(value = "wei/xin")
+@RequestMapping(value = "call/back")
 public class CallBackController {
 
     @Autowired

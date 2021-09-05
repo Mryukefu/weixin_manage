@@ -1,5 +1,4 @@
 package com.example.weixin_manage.service.impl;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,8 +7,8 @@ import com.example.weixin_manage.mapper.UserDetailMapper;
 import com.example.weixin_manage.pojo.UserDetail;
 import com.example.weixin_manage.service.UserDetailService;
 import com.example.weixin_manage.support.MessageUtil;
+import com.example.weixin_manage.support.StringUtils;
 import com.example.weixin_manage.vo.WxUserVO;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

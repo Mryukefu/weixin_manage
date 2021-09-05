@@ -14,6 +14,8 @@ spring:
     filters: stat,wall,log4j
 server:
   port: 9966
+  servlet:
+    context-path: /wx/manage
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

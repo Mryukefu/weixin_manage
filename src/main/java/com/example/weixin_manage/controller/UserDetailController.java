@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-09-02
  */
 @RestController
-@RequestMapping("wx/user")
+@RequestMapping("user")
 public class UserDetailController {
 
     @Autowired

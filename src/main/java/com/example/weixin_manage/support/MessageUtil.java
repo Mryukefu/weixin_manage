@@ -3,7 +3,6 @@ package com.example.weixin_manage.support;
 import com.example.weixin_manage.pojo.TextMessage;
 import com.example.weixin_manage.pojo.UserDetail;
 import com.thoughtworks.xstream.XStream;
-import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
