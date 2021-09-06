@@ -43,6 +43,7 @@ public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDet
         UserDetail userDetail = new UserDetail();
         BeanUtils.copyProperties(wxUserVO,userDetail);
         userDetail.setCtime(System.currentTimeMillis());
+        userDetail.setState(1);
         return this.save(userDetail);
     }
 
@@ -67,12 +68,12 @@ public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDet
 
         String idCard = wxUserVO.getIdCard();
         if (StringUtils.isNotBlank(idCard)){
-            queryWrapper.eq("idCard",idCard);
+            queryWrapper.like("idCard",idCard);
         }
 
         String phone = wxUserVO.getPhone();
         if (StringUtils.isNotBlank(phone)){
-            queryWrapper.eq("phone",phone);
+            queryWrapper.like("phone",phone);
         }
 
 

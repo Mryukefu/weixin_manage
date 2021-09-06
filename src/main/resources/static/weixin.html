@@ -20,11 +20,21 @@
 </head>
 <body>
     <div id="weixin">
+		<div id="top">
+			   用户名称<el-input v-model="queryform.name"  placeholder="用户名称"
+							 style="width: 300px; margin-left: 20px"></el-input>
+			   省份证号码<el-input v-model="queryform.idCard"  placeholder="省份证号码"
+						  style="width: 300px; margin-left: 20px"></el-input>
+			   微信号码<el-input v-model="queryform.weixinCode" placeholder="qq号码"
+						  style="width: 300px; margin-left: 20px"></el-input>
+				<br/>
+			   qq号码<el-input v-model="queryform.qqCode"  placeholder="qq号码"
+						  style="width: 300px; margin-left: 30px;margin-right: 20px;"></el-input>
+			   手机号码<el-input v-model="queryform.phone"  placeholder="手机号码"
+						  style="width: 300px; margin-left: 19px"></el-input>
 
-		<div id="top">			
-				<el-button type="text" @click="search" style="color:white">查询</el-button>	
-				<el-button type="text" @click="handleadd" style="color:#ffffff">添加</el-button>
-			    <el-input v-model="input" @click="handleadd" placeholder="请输入内容"></el-input>
+			<el-button type="primary" @click="search" style="color:white;margin-left: 80px">查询</el-button>
+			<el-button type="primary" @click="handleadd" style="color:#ffffff; margin-right: 20px">添加</el-button>
 			</span>
 
 		</div>
@@ -210,13 +220,11 @@
 		          },
 
 				queryform: {
-					userId: '',
 					name: '',
 					idCard: '',
 					weixinCode: '',
 					qqCode: '',
 					phone: '',
-					otherInfo: '',
 				},
 		          
 		        updateform: {
@@ -232,8 +240,13 @@
 		    methods: {
 
 		        //从服务器读取数据
-				loadData: function(pageNum, pageSize){					
-					axios.get('/wx/manage/user?' + 'pageNum=' +  pageNum + '&pageSize=' + pageSize)
+				loadData: function(pageNum, pageSize){
+				let url =  '/wx/manage/user?'+'pageNum=' +  pageNum + '&pageSize=' + pageSize
+
+	            for(let key in this.queryform){
+						  url +='&'+ key+'='+this.queryform[key]
+						}
+					axios.get(url)
 					.then(res=>{
                 		this.tableData = res.data.data.records;
                 		this.totalCount = res.data.data.total;
@@ -241,7 +254,7 @@
                     console.log(e)
                     });
 				},
-				      
+
 		        //单行删除
 			   handleDelete: function(index, row) {
 					axios.delete('/wx/manage/user',{
@@ -258,6 +271,11 @@
 		        
 		        //搜索
 		        search: function(){
+		        	this.loadData(this.currentPage, this.pagesize);
+		        },
+
+		        //搜索
+		        conditionQuery: function(){
 		        	this.loadData(this.currentPage, this.pagesize);
 		        },
 		        
