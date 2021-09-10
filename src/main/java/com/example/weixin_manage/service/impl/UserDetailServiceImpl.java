@@ -171,10 +171,4 @@ public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDet
 
     }
 
-    public static void main(String[] args) {
-        String[] split1 = "姓名/张书良".split("/");
-        System.out.println(split1.length);
-    }
-
-
 }
