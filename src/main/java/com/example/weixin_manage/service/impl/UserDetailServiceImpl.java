@@ -128,7 +128,7 @@ public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDet
                     writer.print(text);
                 }
 
-                QueryWrapper queryWrapper = new QueryWrapper();
+                QueryWrapper<UserDetail> queryWrapper = new QueryWrapper();
                 String key = split[0];
                 if (MessageUtil.name.equals(key)){
                     queryWrapper.like("name",split[1]);
@@ -145,12 +145,18 @@ public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDet
                 if (MessageUtil.weixin.equals(key)){
                     queryWrapper.like("weixinCode",split[1]);
                 }
-
-                List list = this.listMaps(queryWrapper);
+                queryWrapper.eq("state",1);
+                List<UserDetail> list = this.list(queryWrapper);
+                if (list==null||list.size()==0){
+                    String text = MessageUtil.replyByKeyWord(toUserName, fromUserName, MessageUtil.Message_Text,"信息不存在");
+                    log.info("返回的test文档{}",text);
+                    writer.print(text);
+                }
                 String backContent = MessageUtil.mainMenuKey(list);
                 log.info("key:backContent{}" + backContent);
                 String text = MessageUtil.replyByKeyWord(toUserName, fromUserName, MessageUtil.Message_Text, backContent);
                 log.info("key:text{}" + text);
+                writer.print(text);
                } else if (MessageUtil.Message_Event.equals(msgType)) {
                 if ("subscribe".equals(map.get("Event"))) {
                     String text  = MessageUtil.replyByKeyWord(toUserName, fromUserName, MessageUtil.Message_Text,MessageUtil.mainMenu());
