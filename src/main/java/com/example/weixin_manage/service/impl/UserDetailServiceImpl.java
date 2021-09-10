@@ -9,6 +9,7 @@ import com.example.weixin_manage.service.UserDetailService;
 import com.example.weixin_manage.support.MessageUtil;
 import com.example.weixin_manage.support.StringUtils;
 import com.example.weixin_manage.vo.WxUserVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ import java.util.Map;
  * @since 2021-09-02
  */
 @Service
+@Slf4j
 public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDetail> implements UserDetailService {
 
 
@@ -117,13 +119,15 @@ public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDet
             String fromUserName = map.get("FromUserName");
             String msgType = map.get("MsgType");
             String content = map.get("Content");
-            System.out.println(toUserName + fromUserName + msgType + content);
-            String text = null;
+            log.info(toUserName + fromUserName + msgType + content);
             if ("text".equals(msgType)) {
                 String[] split = content.split("/");
                 if (split==null||split.length!=2){
-                    text = MessageUtil.replyByKeyWord(toUserName, fromUserName, MessageUtil.Message_Text,MessageUtil.mainMenu());
+                    String text = MessageUtil.replyByKeyWord(toUserName, fromUserName, MessageUtil.Message_Text,MessageUtil.mainMenu());
+                    log.info("返回的test文档{}",text);
+                    writer.print(text);
                 }
+
                 QueryWrapper queryWrapper = new QueryWrapper();
                 String key = split[0];
                 if (MessageUtil.name.equals(key)){
@@ -141,23 +145,29 @@ public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDet
                 if (MessageUtil.weixin.equals(key)){
                     queryWrapper.like("weixinCode",split[1]);
                 }
-                List list = this.listMaps(queryWrapper);
-                String s = MessageUtil.mainMenu1(list);
-                text = MessageUtil.replyByKeyWord(toUserName, fromUserName, MessageUtil.Message_Text, s);
 
+                List list = this.listMaps(queryWrapper);
+                String backContent = MessageUtil.mainMenuKey(list);
+                log.info("key:backContent{}" + backContent);
+                String text = MessageUtil.replyByKeyWord(toUserName, fromUserName, MessageUtil.Message_Text, backContent);
+                log.info("key:text{}" + text);
                } else if (MessageUtil.Message_Event.equals(msgType)) {
                 if ("subscribe".equals(map.get("Event"))) {
-                    text = MessageUtil.replyByKeyWord(toUserName, fromUserName, MessageUtil.Message_Text,MessageUtil.mainMenu());
+                    String text  = MessageUtil.replyByKeyWord(toUserName, fromUserName, MessageUtil.Message_Text,MessageUtil.mainMenu());
+                    writer.print(text);
                 }
             }
-            System.out.println(text);
-            writer.print(text);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             writer.close();
         }
 
+    }
+
+    public static void main(String[] args) {
+        String[] split1 = "姓名/张书良".split("/");
+        System.out.println(split1.length);
     }
 
 

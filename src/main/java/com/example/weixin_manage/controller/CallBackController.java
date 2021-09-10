@@ -28,6 +28,11 @@ public class CallBackController {
     @Autowired
     private UserDetailService userDetailService;
 
+    @GetMapping("test")
+    public String test(){
+       return "ok";
+    }
+
 
     /**
      * 验证微信消息

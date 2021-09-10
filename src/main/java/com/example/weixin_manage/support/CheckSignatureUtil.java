@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class CheckSignatureUtil {
     
     //token 令牌标识、和微信开发者中心配置服务器一致
-    private static String token = "tian";
+    private static String token = "yukefu_123";
     
     
     /**

@@ -104,7 +104,7 @@ public class MessageUtil {
         return sb.toString();
     }
 
-    public static String mainMenu1(List<UserDetail> userDetails){
+    public static String mainMenuKey(List<UserDetail> userDetails){
 
         StringBuffer sb = new StringBuffer();
         for (UserDetail userDetail : userDetails) {
@@ -128,7 +128,6 @@ public class MessageUtil {
             }
             sb.append("\n\n");
         }
-
         return sb.toString();
     }
 
