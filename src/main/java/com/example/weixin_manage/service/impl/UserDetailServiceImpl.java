@@ -133,9 +133,9 @@ public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDet
                 if (MessageUtil.name.equals(key)){
                     queryWrapper.like("name",split[1]);
                 }
-                if (MessageUtil.idCard.equals(key)){
+              /*  if (MessageUtil.idCard.equals(key)){
                     queryWrapper.eq("idCard",split[1]);
-                }
+                }*/
                 if (MessageUtil.phone.equals(key)){
                     queryWrapper.like("phone",split[1]);
                 }

@@ -88,8 +88,8 @@ public class MessageUtil {
     public static String name = "姓名";
     public static String idCard = "身份证信息";
     public static String phone = "手机号码";
-    public static String weixin = "微信号码";
-    public static String qq = "qq号码";
+    public static String weixin = "微信号";
+    public static String qq = "QQ号";
 
 
     public static String mainMenu(){
@@ -122,9 +122,9 @@ public class MessageUtil {
                 sb.append("推荐姓名："+userDetail.getRecommendName()+"\n\n");
             }
             if (StringUtils.isNotBlank(userDetail.getEntryTime())){
-                sb.append("入职时间："+userDetail.getRecommendName()+"\n\n");
+                sb.append("入职时间："+userDetail.getEntryTime()+"\n\n");
             }
-            sb.append("入职时间："+userDetail.getRecommendName()+"\n\n");
+            sb.append("查询成功，该会员为功诚平台审核所属会员\n\n");
         }
         return sb.toString();
     }
