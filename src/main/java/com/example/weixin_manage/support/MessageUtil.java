@@ -94,13 +94,11 @@ public class MessageUtil {
 
     public static String mainMenu(){
         StringBuffer sb = new StringBuffer();
-        sb.append("请输入如下格式中一种\n\n");
-        sb.append("姓名/您的姓名"+"\n\n");
-        sb.append("身份证信息/您的身份证号码"+"\n\n");
-        sb.append("手机号码/您的手机号码\n\n");
-        sb.append("微信号码/您的微信号码\n\n");
-        sb.append("qq号码/qq号码\n\n");
-        sb.append("可查询您的所属信息\n\n");
+        sb.append("请输入如下格式中一种，查询会员信息；\n\n例如：姓名/张三");
+        sb.append("姓名/会员真实姓名"+"\n\n");
+        sb.append("手机号码/会员登记手机号码\n\n");
+        sb.append("微信号/会员登记微信号\n\n");
+        sb.append("QQ号/会员登记QQ号\n\n");
         return sb.toString();
     }
 
@@ -111,22 +109,22 @@ public class MessageUtil {
             if (StringUtils.isNotBlank(userDetail.getName())){
                 sb.append("姓名："+userDetail.getName()+"\n\n");
             }
-            if (StringUtils.isNotBlank(userDetail.getIdCard())){
-                sb.append("身份证信息："+userDetail.getIdCard()+"\n\n");
-            }
             if (StringUtils.isNotBlank(userDetail.getPhone())){
                 sb.append("手机号码："+userDetail.getPhone()+"\n\n");
             }
             if (StringUtils.isNotBlank(userDetail.getWeixinCode())){
-                sb.append("微信号码："+userDetail.getWeixinCode()+"\n\n");
+                sb.append("微信号："+userDetail.getWeixinCode()+"\n\n");
             }
             if (StringUtils.isNotBlank(userDetail.getQqCode())){
-                sb.append("qq号码："+userDetail.getQqCode()+"\n\n");
+                sb.append("qq号："+userDetail.getQqCode()+"\n\n");
             }
-            if (StringUtils.isNotBlank(userDetail.getOtherInfo())){
-                sb.append("其他信息："+userDetail.getOtherInfo()+"\n\n");
+            if (StringUtils.isNotBlank(userDetail.getRecommendName())){
+                sb.append("推荐姓名："+userDetail.getRecommendName()+"\n\n");
             }
-            sb.append("\n\n");
+            if (StringUtils.isNotBlank(userDetail.getEntryTime())){
+                sb.append("入职时间："+userDetail.getRecommendName()+"\n\n");
+            }
+            sb.append("入职时间："+userDetail.getRecommendName()+"\n\n");
         }
         return sb.toString();
     }

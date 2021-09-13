@@ -90,9 +90,9 @@ public class UserDetailServiceImpl extends ServiceImpl<UserDetailMapper, UserDet
         }
 
 
-        String otherInfo = wxUserVO.getOtherInfo();
-        if (StringUtils.isNotBlank(otherInfo)){
-            queryWrapper.like("otherInfo",otherInfo );
+        String recommendName = wxUserVO.getRecommendName();
+        if (StringUtils.isNotBlank(recommendName)){
+            queryWrapper.like("recommendName",recommendName );
         }
         queryWrapper.like("state",1 );
         IPage page = this.page(new Page(wxUserVO.getPageNum(),wxUserVO.getPageSize()), queryWrapper);

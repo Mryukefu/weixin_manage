@@ -1,5 +1,7 @@
 package com.example.weixin_manage.vo;
 
+import lombok.Data;
+
 /**
  * class desc
  * todo
@@ -7,7 +9,7 @@ package com.example.weixin_manage.vo;
  * @author ykf
  * @date 2021/9/2 18:01
  */
-
+@Data
 public class WxUserVO {
 
     private long pageSize;
@@ -54,79 +56,7 @@ public class WxUserVO {
 
     private String otherInfo;
 
-    public long getPageSize() {
-        return pageSize;
-    }
+    private String recommendName;
 
-    public void setPageSize(long pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public long getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(long pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getWeixinCode() {
-        return weixinCode;
-    }
-
-    public void setWeixinCode(String weixinCode) {
-        this.weixinCode = weixinCode;
-    }
-
-    public String getQqCode() {
-        return qqCode;
-    }
-
-    public void setQqCode(String qqCode) {
-        this.qqCode = qqCode;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
-
-    public String getOtherInfo() {
-        return otherInfo;
-    }
-
-    public void setOtherInfo(String otherInfo) {
-        this.otherInfo = otherInfo;
-    }
+    private String entryTime;
 }
