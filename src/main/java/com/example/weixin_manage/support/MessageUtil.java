@@ -94,7 +94,7 @@ public class MessageUtil {
 
     public static String mainMenu(){
         StringBuffer sb = new StringBuffer();
-        sb.append("请输入如下格式中一种，查询会员信息；\n\n例如：姓名/张三");
+        sb.append("请输入如下格式中一种，查询会员信息；例如：姓名/张三");
         sb.append("姓名/会员真实姓名"+"\n\n");
         sb.append("手机号码/会员登记手机号码\n\n");
         sb.append("微信号/会员登记微信号\n\n");
